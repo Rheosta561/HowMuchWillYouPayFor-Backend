@@ -34,6 +34,11 @@ const envSchema = z.object({
   GOOGLE_CLIENT_ID: z.string().default(""),
   GOOGLE_ALLOWED_AUDIENCES: z.string().default(""),
   GOOGLE_AUTH_IP_MAX: z.coerce.number().default(60),
+  LEADERBOARD_MIN_RESPONSES: z.coerce.number().int().min(1).default(30),
+  LEADERBOARD_CRON_SCHEDULE: z.string().min(1).default("*/15 * * * *"),
+  LEADERBOARD_TIMEZONE: z.string().min(1).default("UTC"),
+  LEADERBOARD_LOCK_TTL_SECONDS: z.coerce.number().int().min(5).default(300),
+  LEADERBOARD_ENABLED: z.string().default("true"),
   APP_BASE_URL: z.string().default("http://localhost:3000"),
 });
 export type Env = z.infer<typeof envSchema>;
@@ -69,5 +74,10 @@ export const env: Env = envSchema.parse({
   GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
   GOOGLE_ALLOWED_AUDIENCES: process.env.GOOGLE_ALLOWED_AUDIENCES,
   GOOGLE_AUTH_IP_MAX: process.env.GOOGLE_AUTH_IP_MAX,
+  LEADERBOARD_MIN_RESPONSES: process.env.LEADERBOARD_MIN_RESPONSES,
+  LEADERBOARD_CRON_SCHEDULE: process.env.LEADERBOARD_CRON_SCHEDULE,
+  LEADERBOARD_TIMEZONE: process.env.LEADERBOARD_TIMEZONE,
+  LEADERBOARD_LOCK_TTL_SECONDS: process.env.LEADERBOARD_LOCK_TTL_SECONDS,
+  LEADERBOARD_ENABLED: process.env.LEADERBOARD_ENABLED,
   APP_BASE_URL: process.env.APP_BASE_URL,
 });

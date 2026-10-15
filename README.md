@@ -1,9 +1,10 @@
-# HowMuchWillYouPayFor — Authentication Service
+# HowMuchWillYouPayFor — Backend API
 
-Express + TypeScript + MongoDB (Mongoose) authentication module for
+Express + TypeScript + MongoDB (Mongoose) backend for
 HowMuchWillYouPayFor.org. Strategy-pattern providers (Email OTP, Google)
-share one token/session system. Idea, pricing-response, and leaderboard
-modules are intentionally not implemented yet.
+share one token/session system, plus normalized Ideas, Pricing Responses,
+and Leaderboard snapshot modules. See `docs/ideas.md`, `docs/responses.md`,
+and `docs/leaderboard.md` for the domain docs.
 
 ## Endpoint contracts
 
@@ -45,6 +46,7 @@ OTP_MAX_REQUESTS_PER_HOUR=5
 OTP_HASH_PEPPER=<random-pepper>               # min 1 char
 OTP_REQUEST_IP_MAX=20
 OTP_VERIFY_IP_MAX=60
+RESPONSES_IP_MAX=60
 EMAIL_PROVIDER=dev                            # dev | resend | memory
 RESEND_API_KEY=                               # required for resend
 EMAIL_FROM="HowMuchWillYouPayFor <no-reply@yourdomain.com>"
@@ -57,6 +59,11 @@ FRONTEND_ORIGINS=http://localhost:3000        # comma-separated allowlist
 GOOGLE_CLIENT_ID=                             # required for Google sign-in
 GOOGLE_ALLOWED_AUDIENCES=                     # extra client IDs, comma-separated
 GOOGLE_AUTH_IP_MAX=60
+LEADERBOARD_MIN_RESPONSES=30
+LEADERBOARD_CRON_SCHEDULE=*/15 * * * *
+LEADERBOARD_TIMEZONE=UTC
+LEADERBOARD_LOCK_TTL_SECONDS=300
+LEADERBOARD_ENABLED=true
 APP_BASE_URL=http://localhost:3000
 ```
 
@@ -75,7 +82,7 @@ if the default port is unreachable).
 npm install
 npm run typecheck   # tsc --noEmit
 npm run build       # tsc -> dist/
-npm test            # vitest run (83 tests: unit + integration)
+npm test            # vitest run (unit + integration)
 npm run dev         # tsx watch src/server.ts
 ```
 

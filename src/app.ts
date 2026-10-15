@@ -7,6 +7,7 @@ import { createIdeaRouter, createMeRouter } from "./modules/ideas/idea.routes.js
 import { createResponseRouter, createMyResponsesRouter } from "./modules/responses/response.routes.js";
 import { createCategoryRouter } from "./modules/categories/category.routes.js";
 import { createLocationRouter } from "./modules/locations/location.routes.js";
+import { createLeaderboardRouter } from "./modules/leaderboard/leaderboard.routes.js";
 import { requestIdMiddleware } from "./middleware/request-id.js";
 import { AuthError } from "./modules/auth/auth.errors.js";
 import { env } from "./config/env.js";
@@ -68,6 +69,7 @@ export function createApp(opts: AppOptions = {}): express.Express {
   app.use("/v1/locations", createLocationRouter());
   app.use("/v1/me/ideas", createMeRouter());
   app.use("/v1/me/responses", createMyResponsesRouter());
+  app.use("/v1/leaderboard", createLeaderboardRouter());
 
   // Zod + auth error mapping. Must be last.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
